@@ -1,0 +1,292 @@
+/* Google Inter font - assignment me mandatory hai */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  background: #f5f6f8;
+}
+
+.app-container {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+  max-width: 1300px;
+  margin: 24px auto;
+  padding: 0 16px;
+  align-items: start;
+}
+
+/* ===== LEFT: Complaint Form ===== */
+.complaint-form {
+  background: #ffffff;
+  border: 1px solid #e2e5ea;
+  border-radius: 10px;
+  padding: 24px;
+}
+
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.form-header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  color: #1a1d23;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: #8a8f98;
+  margin: 4px 0 0;
+}
+
+.status-badge {
+  background: #fff4e5;
+  color: #b5730a;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+fieldset {
+  border: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+
+legend {
+  font-size: 12px;
+  font-weight: 700;
+  color: #5b6472;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  padding: 0;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.field-column {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field label,
+.field-column label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #3c4149;
+}
+
+.field input,
+.field select,
+.field-column textarea {
+  border: 1px solid #d7dbe0;
+  border-radius: 7px;
+  padding: 9px 11px;
+  font-size: 14px;
+  color: #1a1d23;
+  background: #fafbfc;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.field input:focus,
+.field select:focus,
+.field-column textarea:focus {
+  border-color: #4f7cff;
+  background: #fff;
+}
+
+.field-column textarea {
+  resize: vertical;
+  font-family: inherit;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-secondary {
+  background: none;
+  border: 1px solid #d7dbe0;
+  border-radius: 7px;
+  padding: 9px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #3c4149;
+}
+
+.btn-primary {
+  background: #3559e0;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  padding: 9px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.save-success {
+  margin-top: 12px;
+  color: #1a8f4c;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ===== RIGHT: AI Assistant Panel ===== */
+.ai-panel {
+  background: #ffffff;
+  border: 1px solid #e2e5ea;
+  border-radius: 10px;
+  padding: 24px;
+  position: sticky;
+  top: 24px;
+}
+
+.ai-panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.ai-panel-header h2 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.ai-icon {
+  font-size: 16px;
+}
+
+.beta-badge {
+  background: #eef1ff;
+  color: #3559e0;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.ai-textarea {
+  width: 100%;
+  border: 1px dashed #c7cbd3;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 13px;
+  color: #1a1d23;
+  resize: vertical;
+  outline: none;
+  margin-bottom: 12px;
+}
+
+.ai-textarea:focus {
+  border-color: #4f7cff;
+}
+
+.extract-btn {
+  width: 100%;
+  background: #3559e0;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  padding: 11px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+
+.extract-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.ai-status {
+  margin-bottom: 14px;
+}
+
+.progress-bar {
+  height: 4px;
+  background: #eef1ff;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 40%;
+  background: #3559e0;
+  animation: loading 1.2s infinite ease-in-out;
+}
+
+@keyframes loading {
+  0% { margin-left: 0%; }
+  50% { margin-left: 60%; }
+  100% { margin-left: 0%; }
+}
+
+.ai-message {
+  font-size: 13px;
+  padding: 12px;
+  border-radius: 8px;
+  line-height: 1.5;
+}
+
+.ai-message.idle {
+  background: #f0f3ff;
+  color: #3c4149;
+}
+
+.ai-message.success {
+  background: #e9f9ee;
+  color: #1a8f4c;
+}
+
+.ai-message.error {
+  background: #fdecec;
+  color: #c0392b;
+}
+
+@media (max-width: 900px) {
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+}
