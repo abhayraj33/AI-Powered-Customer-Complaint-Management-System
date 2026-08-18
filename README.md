@@ -254,7 +254,7 @@ Get single complaint
 
 {
   "complaint_source": "Email",
-  "customer_name": "John Smith",
+  "customer_name": "Abhayraj",
   "product_name": "Paracetamol",
   "product_strength": "500 mg",
   "batch_number": "B12345",
