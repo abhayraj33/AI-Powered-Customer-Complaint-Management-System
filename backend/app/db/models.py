@@ -35,6 +35,7 @@ class Complaint(Base):
     initial_severity = Column(String(50), nullable=True)
     priority = Column(String(50), nullable=True)
     ai_confidence_notes = Column(Text, nullable=True)
+    ai_summary = Column(Text, nullable=True)
 
     # Status tracking
     status = Column(String(50), default="Pending Triage")

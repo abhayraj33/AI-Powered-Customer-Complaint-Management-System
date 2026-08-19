@@ -29,9 +29,10 @@ client = Groq(api_key=settings.GROQ_API_KEY)
 # ye state update hoti rehti hai.
 # ============================================================
 class ComplaintState(TypedDict):
-    raw_text: str                    # input: user ne jo text/document diya
-    extracted_data: Optional[dict]   # step 1 ke baad fill hoga
-    risk_assessment: Optional[dict]  # step 2 ke baad fill hoga
+    raw_text: str
+    extracted_data: Optional[dict]
+    risk_assessment: Optional[dict]
+    summary: Optional[str]           # <-- NAYA
     error: Optional[str]
 
 
@@ -122,6 +123,35 @@ Return ONLY a valid JSON object with these keys:
 
     return state
 
+# NODE 3 (BONUS): One-line Summary Generation
+# Quick triage ke liye - QA team ko lambi complaint na padhni pade
+
+def generate_summary(state: ComplaintState) -> ComplaintState:
+    extracted = state.get("extracted_data", {})
+    risk = state.get("risk_assessment", {})
+
+    prompt = f"""
+Summarize this pharmaceutical complaint in ONE short sentence (max 20 words)
+suitable for a QA triage dashboard. Be factual and specific.
+
+Product: {extracted.get('product_name', 'Unknown')}
+Batch: {extracted.get('batch_number', 'Unknown')}
+Issue: {extracted.get('complaint_description', state['raw_text'])}
+Severity: {risk.get('initial_severity', 'Unknown')}
+
+Return ONLY a valid JSON object with one key:
+- summary (a single concise sentence)
+"""
+    try:
+        result = call_llm(prompt)
+        summary_data = json.loads(result)
+        state["summary"] = summary_data.get("summary", "")
+    except Exception as e:
+        state["error"] = (state.get("error") or "") + f" | Summary generation failed: {str(e)}"
+        state["summary"] = ""
+
+    return state
+
 
 # ============================================================
 # GRAPH: Nodes ko jodkar ek workflow banate hain
@@ -129,14 +159,14 @@ Return ONLY a valid JSON object with these keys:
 def build_complaint_graph():
     graph = StateGraph(ComplaintState)
 
-    # Nodes add karo
     graph.add_node("extract_info", extract_complaint_info)
     graph.add_node("classify_risk", classify_risk)
+    graph.add_node("generate_summary", generate_summary)   # <-- NAYA
 
-    # Flow define karo: extract -> classify -> end
     graph.set_entry_point("extract_info")
     graph.add_edge("extract_info", "classify_risk")
-    graph.add_edge("classify_risk", END)
+    graph.add_edge("classify_risk", "generate_summary")     # <-- NAYA
+    graph.add_edge("generate_summary", END)                 # <-- UPDATED
 
     return graph.compile()
 
@@ -157,6 +187,7 @@ def process_complaint_text(raw_text: str) -> dict:
         "raw_text": raw_text,
         "extracted_data": None,
         "risk_assessment": None,
+        "summary": None,          # <-- NAYA
         "error": None,
     }
 
@@ -168,6 +199,7 @@ def process_complaint_text(raw_text: str) -> dict:
         "initial_severity": (final_state.get("risk_assessment") or {}).get("initial_severity"),
         "priority": (final_state.get("risk_assessment") or {}).get("priority"),
         "ai_confidence_notes": (final_state.get("risk_assessment") or {}).get("reasoning"),
+        "ai_summary": final_state.get("summary", ""),   # <-- NAYA
     }
 
     if final_state.get("error"):

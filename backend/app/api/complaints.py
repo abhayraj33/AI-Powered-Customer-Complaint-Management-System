@@ -3,6 +3,7 @@ API endpoints - ye woh URLs hain jo frontend call karega.
 """
 
 from fastapi import APIRouter, UploadFile, File, HTTPException, Depends
+from app.agents.completeness_checker import check_completeness
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from typing import List
@@ -102,3 +103,16 @@ def get_complaint(complaint_id: int, db: Session = Depends(get_db)):
     if not complaint:
         raise HTTPException(status_code=404, detail="Complaint not found")
     return complaint
+
+# ============================================================
+# BONUS FEATURE: Completeness Checker
+# ============================================================
+
+@router.post("/check-completeness")
+def check_complaint_completeness(complaint: ExtractedComplaintData):
+    """
+    Current form data leke check karta hai kitna complete hai,
+    aur agar kuch missing hai to follow-up questions bhi deta hai.
+    """
+    result = check_completeness(complaint.model_dump())
+    return result
