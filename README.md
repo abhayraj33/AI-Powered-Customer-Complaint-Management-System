@@ -2,6 +2,7 @@ Pharma Complaint Management System
 
 An AI-powered pharmaceutical complaint management system that converts unstructured customer complaints into structured data and performs initial severity/priority assessment.
 
+
 🚀 Features
 
 AI-based complaint information extraction
